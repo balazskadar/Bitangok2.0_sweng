@@ -1,8 +1,11 @@
-﻿// Program.cs
-using Bitangok.Core.Models;
+﻿using Bitangok.Core.Models;
+using Bitangok.Core.Equipments;
+using Bitangok.Core.Services;
 
-var harcos = CharacterFactory.CreateCharacter("warrior", "Leó");
-var varazslo = CharacterFactory.CreateCharacter("mage", "Gandalf");
+var harcos = new Warrior { Name = "Leó" };
+var feldiszitettHarcos = new Sword(new Shield(harcos));
 
-Console.WriteLine($"{harcos.Name} HP: {harcos.Health}");
-Console.WriteLine($"{varazslo.Name} HP: {varazslo.Health}");
+var mage = new Mage { Name = "Gandalf" };
+
+var engine = new BattleEngine();
+engine.Fight(feldiszitettHarcos, mage);
