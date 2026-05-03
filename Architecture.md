@@ -1,69 +1,69 @@
-# Bitangok Arénája (The Arena of Rogues) - Szoftvertechnológia Projekt
+# Bitangok ArÃ©nÃ¡ja (The Arena of Rogues) - SzoftvertechnolÃ³gia Projekt
 
-## Projekt Áttekintés
-Egy körökre osztott, automatikus harci szimulátor webes felülettel. A játékosok összeállítják és felszerelik karaktereiket, majd a backend motor a "Sors Kockája" (RNG) segítségével lejátssza a küzdelmet.
+## Projekt ÃttekintÃ©s
+Egy kÃ¶rÃ¶kre osztott, automatikus harci szimulÃ¡tor webes felÃ¼lettel. A jÃ¡tÃ©kosok Ã¶sszeÃ¡llÃ­tjÃ¡k Ã©s felszerelik karaktereiket, majd a backend motor a "Sors KockÃ¡ja" (RNG) segÃ­tsÃ©gÃ©vel lejÃ¡tssza a kÃ¼zdelmet.
 
-## Technikai Stack és Architektúra Terv
+## Technikai Stack Ã©s ArchitektÃºra Terv
 
-### Teljes Architektúra Áttekintés
+### Teljes ArchitektÃºra ÃttekintÃ©s
 
 
-A projekt egy modern, rétegelt webalkalmazás architektúrát követ, ahol aFrontend és a Backend élesen elkülönül.
-
----
-
-### 1. Frontend (Megjelenítési Réteg)
-
-* **Technológia:** **React** (TypeScripttel).
-* **Feladata:** Egy Single Page Application (SPA), ahol a felhasználó interakcióba lép a játékkal.
-* **Fõbb Komponensek:**
-    * **Aréna Nézet:** Megjeleníti a folyamatban lévõ csatát.
-    * **Karakter Készítõ:** Felület a hõsök összeállítására (pl. faj, osztály).
-    * **Felszerelés Bolt:** A Decorator mintával megvalósított tárgyak ráadása a karakterre.
-* **Kommunikáció:** REST API hívásokon keresztül (JSON formátumban) kommunikál a backenddel.
+A projekt egy modern, rÃ©tegelt webalkalmazÃ¡s architektÃºrÃ¡t kÃ¶vet, ahol a Frontend Ã©s a Backend Ã©lesen elkÃ¼lÃ¶nÃ¼l.
 
 ---
 
-### 2. Backend (Logikai Réteg)
+### 1. Frontend (MegjelenÃ­tÃ©si RÃ©teg)
 
-* **Technológia:** **ASP.NET Core Web API** (.NET 8).
-* **Feladata:** Fogadja a frontend kéréseit, futtatja a játéklogikát és kezeli az adatbázist.
-
-#### Belsõ Rétegek:
-
-* **API Kontrollerek:** Kezelik a HTTP kéréseket (pl. `POST /api/battle/start`).
-* **Core Logika (`Bitangok.Core`):** Ez a motor. Itt valósulnak meg a kért szoftvertechnológiai minták:
-    * **Factory:** Karakterek (Warrior, Mage) létrehozása.
-    * **Decorator:** Felszerelések (Kard, Pajzs) ráaggatása a karakterre (Open/Closed Principle).
-    * **Strategy:** Harci stílusok futásidejû cseréje (pl. agresszív -> védekezõ).
-    * **Observer:** Eseményvezérelt harci napló készítése.
+* **TechnolÃ³gia:** **React** (TypeScripttel).
+* **Feladata:** Egy Single Page Application (SPA), ahol a felhasznÃ¡lÃ³ interakciÃ³ba lÃ©p a jÃ¡tÃ©kkal.
+* **FÅ‘bb Komponensek:**
+    * **ArÃ©na NÃ©zet:** MegjelenÃ­ti a folyamatban lÃ©vÅ‘ csatÃ¡t.
+    * **Karakter KÃ©szÃ­tÅ‘:** FelÃ¼let a hÅ‘sÃ¶k Ã¶sszeÃ¡llÃ­tÃ¡sÃ¡ra (pl. faj, osztÃ¡ly).
+    * **FelszerelÃ©s Bolt:** A Decorator mintÃ¡val megvalÃ³sÃ­tott tÃ¡rgyak rÃ¡adÃ¡sa a karakterre.
+* **KommunikÃ¡ciÃ³:** REST API hÃ­vÃ¡sokon keresztÃ¼l (JSON formÃ¡tumban) kommunikÃ¡l a backenddel.
 
 ---
 
-### 3. Adatbázis (Adatkezelési Réteg)
+### 2. Backend (Logikai RÃ©teg)
 
-* **Technológia:** **SQLite** (a féléves projekt egyszerûsége miatt).
+* **TechnolÃ³gia:** **ASP.NET Core Web API** (.NET 8).
+* **Feladata:** Fogadja a frontend kÃ©rÃ©seit, futtatja a jÃ¡tÃ©klogikÃ¡t Ã©s kezeli az adatbÃ¡zist.
+
+#### BelsÅ‘ RÃ©tegek:
+
+* **API Kontrollerek:** Kezelik a HTTP kÃ©rÃ©seket (pl. `POST /api/battle/start`).
+* **Core Logika (`Bitangok.Core`):** Ez a motor. Itt valÃ³sulnak meg a kÃ©rt szoftvertechnolÃ³giai mintÃ¡k:
+    * **Factory:** Karakterek (Warrior, Mage) lÃ©trehozÃ¡sa.
+    * **Decorator:** FelszerelÃ©sek (Kard, Pajzs) rÃ¡aggatÃ¡sa a karakterre (Open/Closed Principle).
+    * **Strategy:** Harci stÃ­lusok futÃ¡sidejÅ± cserÃ©je (pl. agresszÃ­v -> vÃ©dekezÅ‘).
+    * **Observer:** EsemÃ©nyvezÃ©relt harci naplÃ³ kÃ©szÃ­tÃ©se.
+
+---
+
+### 3. AdatbÃ¡zis (AdatkezelÃ©si RÃ©teg)
+
+* **TechnolÃ³gia:** **SQLite** (a fÃ©lÃ©ves projekt egyszerÅ±sÃ©ge miatt).
 * **ORM:** **Entity Framework Core (EF Core)**.
-    * Az EF Core segítségével C# osztályokból (Code-First) generáljuk az adatbázis sémát, így elkerülve az SQL kód írását.
-* **Mit tárolunk:**
-    * Mentett karakterek (név, osztály, felszerelés).
-    * Csata naplók (Battle Logs) és statisztikák.
+    * Az EF Core segÃ­tsÃ©gÃ©vel C# osztÃ¡lyokbÃ³l (Code-First) generÃ¡ljuk az adatbÃ¡zis sÃ©mÃ¡t, Ã­gy elkerÃ¼lve az SQL kÃ³d Ã­rÃ¡sÃ¡t.
+* **Mit tÃ¡rolunk:**
+    * Mentett karakterek (nÃ©v, osztÃ¡ly, felszerelÃ©s).
+    * Csata naplÃ³k (Battle Logs) Ã©s statisztikÃ¡k.
 
 ---
 
-## SOLID és Tiszta Kód Elvek
+## SOLID Ã©s Tiszta KÃ³d Elvek
 
-* **Separation of Concerns:** A frontend és backend különválasztása, valamint a logikai és API rétegek elkülönítése a backendben.
-* **Open/Closed Principle:** A Decorator minta biztosítja, hogy új fegyvereket adhassunk hozzá a `BaseCharacter` osztály módosítása nélkül.
-* **Dependency Injection:** Az interfészek használata (pl. `IRandomGenerator`) biztosítja a laza csatolást és a tesztelhetõséget.
+* **Separation of Concerns:** A frontend Ã©s backend kÃ¼lÃ¶nvÃ¡lasztÃ¡sa, valamint a logikai Ã©s API rÃ©tegek elkÃ¼lÃ¶nÃ­tÃ©se a backendben.
+* **Open/Closed Principle:** A Decorator minta biztosÃ­tja, hogy Ãºj fegyvereket adhassunk hozzÃ¡ a `BaseCharacter` osztÃ¡ly mÃ³dosÃ­tÃ¡sa nÃ©lkÃ¼l.
+* **Dependency Injection:** Az interfÃ©szek hasznÃ¡lata (pl. `IRandomGenerator`) biztosÃ­tja a laza csatolÃ¡st Ã©s a tesztelhetÅ‘sÃ©get.
 
 ---
 
-## Fejlesztési Lépések (Roadmap)
+## FejlesztÃ©si LÃ©pÃ©sek (Roadmap)
 
-1.  **Backend Alapok:** A `Bitangok.Core` logikájának (minták) befejezése.
-2.  **Adatbázis Integráció:** EF Core és SQLite beállítása.
-3.  **API Réteg:** REST végpontok kialakítása.
-4.  **Frontend Alapok:** React projekt létrehozása.
-5.  **Összekötés:** A React frontend és .NET Web API kommunikációjának megvalósítása.
-6.  **CI/CD:** Automatizált build és test pipeline beállítása GitHub Actions-szel.
+1.  **Backend Alapok:** A `Bitangok.Core` logikÃ¡jÃ¡nak (mintÃ¡k) befejezÃ©se.
+2.  **AdatbÃ¡zis IntegrÃ¡ciÃ³:** EF Core Ã©s SQLite beÃ¡llÃ­tÃ¡sa.
+3.  **API RÃ©teg:** REST vÃ©gpontok kialakÃ­tÃ¡sa.
+4.  **Frontend Alapok:** React projekt lÃ©trehozÃ¡sa.
+5.  **Ã–sszekÃ¶tÃ©s:** A React frontend Ã©s .NET Web API kommunikÃ¡ciÃ³jÃ¡nak megvalÃ³sÃ­tÃ¡sa.
+6.  **CI/CD:** AutomatizÃ¡lt build Ã©s test pipeline beÃ¡llÃ­tÃ¡sa GitHub Actions-szel.
