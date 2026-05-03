@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Bitangok Arénája UI</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #1a1a1a; color: white; display: flex; flex-direction: column; align-items: center; }
+        .setup { background: #333; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+        .log-container { width: 80%; background: black; padding: 15px; border: 1px solid #444; height: 300px; overflow-y: auto; font-family: monospace; }
+        .log-entry { border-bottom: 1px solid #222; padding: 5px; color: #0f0; }
+        button { background: #e67e22; border: none; padding: 10px 20px; color: white; cursor: pointer; border-radius: 5px; font-weight: bold; }
+        button:hover { background: #d35400; }
+    </style>
+</head>
+<body>
+    <h1>⚔️ Bitangok Arénája ⚔️</h1>
+    
+    <div class="setup">
+        <input type="text" id="p1Name" placeholder="1. Harcos neve" value="Leó">
+        <select id="p1Type"><option value="warrior">Warrior</option><option value="mage">Mage</option></select>
+        <span> VS </span>
+        <input type="text" id="p2Name" placeholder="2. Harcos neve" value="Gandalf">
+        <select id="p2Type"><option value="mage">Mage</option><option value="warrior">Warrior</option></select>
+        <button onclick="startBattle()">HARC!</button>
+    </div>
+
+    <div class="log-container" id="log">
+        <div class="log-entry">Várakozás a harcra...</div>
+    </div>
+
+    <script>
+        async function startBattle() {
+            const logDiv = document.getElementById('log');
+            logDiv.innerHTML = "A harcosok belépnek az arénába...";
+
+            const response = await fetch('/api/arena/start', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    player1Name: document.getElementById('p1Name').value,
+                    player1Type: document.getElementById('p1Type').value,
+                    player2Name: document.getElementById('p2Name').value,
+                    player2Type: document.getElementById('p2Type').value
+                })
+            });
+
+            const result = await response.json();
+            logDiv.innerHTML = "";
+            
+            result.battleLog.forEach(line => {
+                const entry = document.createElement('div');
+                entry.className = "log-entry";
+                entry.innerText = line;
+                logDiv.appendChild(entry);
+            });
+
+            const winnerMsg = document.createElement('h2');
+            winnerMsg.style.color = "#e67e22";
+            winnerMsg.innerText = "Győztes: " + result.winner;
+            logDiv.prepend(winnerMsg);
+        }
+    </script>
+</body>
+</html>
