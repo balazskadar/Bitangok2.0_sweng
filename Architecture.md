@@ -14,7 +14,7 @@ A projekt egy modern, rétegelt webalkalmazás architektúrát követ, ahol a Fr
 
 ### 1. Frontend (Megjelenítési Réteg)
 
-* **Technológia:** **React** (TypeScripttel).
+* **Technológia:** **React** (JavaScripttel).
 * **Feladata:** Egy Single Page Application (SPA), ahol a felhasználó interakcióba lép a játékkal.
 * **Főbb Komponensek:**
     * **Aréna Nézet:** Megjeleníti a folyamatban lévő csatát.
