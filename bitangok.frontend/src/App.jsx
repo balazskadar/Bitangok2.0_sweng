@@ -1,122 +1,80 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+﻿import { useState } from 'react';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [battleResult, setBattleResult] = useState(null);
+    const [loading, setLoading] = useState(false);
 
-  return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    // Ez a függvény hívja meg a korábban megírt .NET API-t
+    const startBattle = async () => {
+        setLoading(true);
+        try {
+            // Itt a te API címedet használjuk (localhost:7221)
+            const response = await fetch('https://localhost:7221/api/battle/quick-battle?p1Name=Leó&p2Name=Gandalf');
+            if (!response.ok) throw new Error('API hiba');
 
-      <div className="ticks"></div>
+            const data = await response.json();
+            setBattleResult(data);
+        } catch (error) {
+            console.error("Hiba a harc során:", error);
+            alert("Nem sikerült elérni a backendet! Fut az API?");
+        } finally {
+            setLoading(false);
+        }
+    };
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+    // 1. BEJELENTKEZŐ OLDAL
+    if (!isLoggedIn) {
+        return (
+            <div className="login-screen">
+                <div className="login-card">
+                    <h1 className="medieval-font">Bejelentkezés</h1>
+                    <div className="input-group">
+                        <label>FELHASZNÁLÓNÉV:</label>
+                        <input type="text" />
+                    </div>
+                    <div className="input-group">
+                        <label>JELSZÓ:</label>
+                        <input type="password" />
+                    </div>
+                    <button className="login-btn" onClick={() => setIsLoggedIn(true)}>
+                        BEJELENTKEZÉS
+                    </button>
+                </div>
+            </div>
+        );
+    }
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+    // 2. ARÉNA OLDAL (Harc)
+    return (
+        <div className="arena-screen">
+            <div className="arena-content">
+                <h1 className="medieval-font">A Bitangok Arénája</h1>
+
+                <button
+                    className="fight-btn"
+                    onClick={startBattle}
+                    disabled={loading}
+                >
+                    {loading ? 'Harc folyamatban...' : 'INDULJON A HARC!'}
+                </button>
+
+                {battleResult && (
+                    <div className="scroll-container">
+                        <div className="battle-paper">
+                            <h2 className="winner-text">Győztes: {battleResult.winner}</h2>
+                            <div className="log-list">
+                                {battleResult.battleLog.map((line, index) => (
+                                    <p key={index} className="log-line">{line}</p>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </div>
+        </div>
+    );
 }
 
-export default App
+export default App;
