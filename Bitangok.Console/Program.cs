@@ -8,4 +8,4 @@ var feldiszitettHarcos = new Sword(new Shield(harcos));
 var mage = new Mage { Name = "Gandalf" };
 
 var engine = new BattleEngine();
-engine.Fight(feldiszitettHarcos, mage);
+engine.SimulateFight(feldiszitettHarcos, mage);
